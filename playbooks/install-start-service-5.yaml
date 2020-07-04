@@ -1,0 +1,30 @@
+---
+- name: Install Linux package
+  become: true
+  hosts: appservers
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+    - name: Install postfix package
+      yum:
+        name: postfix
+        state: present
+    - name: Start httpd service
+      service:
+        name: httpd
+        state: started
+    - name: Start postfix service
+      service:
+        name: postfix
+        state: started
+    - name: Enable httpd service
+      service:
+        name: httpd
+        enabled: true
+    - name: Enable postfix service
+      service:
+        name: postfix
+        enabled: true
+

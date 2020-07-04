@@ -1,0 +1,18 @@
+---
+- hosts: appservers
+  vars:
+    userfile: /home/osboxes/ansible-demo/users.list
+  tasks:
+    - name: Create file
+      file:
+        state: touch
+        path: "{{ userfile}}"
+    - name: List Users
+      lineinfile:
+         path: "{{ userfile}}"
+         line:  "{{ item}}"
+      with_items:
+        -  "{{ developers}}"
+        -  "{{ admins}}"
+        -  "{{ testers}}"
+

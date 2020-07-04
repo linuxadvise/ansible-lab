@@ -1,0 +1,22 @@
+---
+- hosts: all
+  become: yes
+  handlers:
+    - name: restart apache
+      service: name="httpd" state="restarted"
+      listen: "restart web"
+  tasks:
+    - name: Create new document root directory
+      file:
+        path: /var/www/html
+        state: directory
+
+    - name: change config
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^DocumentRoot.*$'
+        replace: 'DocumentRoot "/var/www/html"'
+        backup: yes
+      notify: "restart web"
+
+

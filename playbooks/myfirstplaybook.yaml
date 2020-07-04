@@ -1,0 +1,11 @@
+---
+
+- name: My First Play
+  become: true
+  hosts: allservers
+  tasks: 
+  - name: maria user needs to be added
+    user:
+      name: maria
+      uid: 5000
+      state: present  

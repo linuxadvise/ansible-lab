@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  become: yes
+  tasks:
+    - name: edit index
+      lineinfile:
+        path: /var/www/html/index.html
+        line: "I am modifying the web content"
+      when:
+        - ansible_hostname == "ansible1"
+
+

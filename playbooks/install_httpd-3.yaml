@@ -1,0 +1,14 @@
+---
+- name: Install Linux package
+  become: true
+  hosts: appservers
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present
+    - name: Install postfix package
+      yum:
+        name: postfix
+        state: present
+

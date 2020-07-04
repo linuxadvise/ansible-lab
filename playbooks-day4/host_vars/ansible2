@@ -1,0 +1,4 @@
+pkg_name: httpd
+index_file_path: /var/www/html/index.html
+service_name: httpd
+

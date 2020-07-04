@@ -1,0 +1,24 @@
+---
+- hosts: all
+  tasks:
+    - name: Install Apache and ntp
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - httpd
+        - ntp
+      tags:
+        - http
+
+
+    - name: Work on Configuration Tag
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - telnet
+        - postfix
+      tags:
+         - telnet
+

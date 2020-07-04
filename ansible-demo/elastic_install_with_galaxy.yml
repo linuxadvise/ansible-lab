@@ -1,0 +1,6 @@
+- name: Call Elasticsearch role
+  hosts: all
+  roles:
+    - role: 0x0i.elasticsearch
+
+

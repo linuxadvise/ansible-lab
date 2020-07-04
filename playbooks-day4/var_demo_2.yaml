@@ -1,0 +1,12 @@
+---
+- hosts: appservers 
+  become: true
+  vars:
+    user: prashanti
+  tasks:
+    - name: Creates the user {{ user }}
+      user:
+        name: "{{ user }}"
+
+
+

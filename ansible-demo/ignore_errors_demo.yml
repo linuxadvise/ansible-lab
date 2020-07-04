@@ -1,0 +1,16 @@
+---
+
+- hosts: all
+  become: yes
+  tasks :
+  - name: Get files
+    get_url:
+      url: "http://{{item}}/index.html"
+      dest: "/tmp/{{item}}"
+    ignore_errors: yes
+    with_items:
+      - ansible1
+      - ansible2
+      - ansible3
+
+

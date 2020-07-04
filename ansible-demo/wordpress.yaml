@@ -1,0 +1,6 @@
+---
+ - name: Configure Wordpress on CentOS/RHEL/Debian System
+   become: yes
+   hosts: webservers
+   roles:
+    - {role: frogyyen.centos7-wordpress}

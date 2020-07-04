@@ -1,0 +1,4 @@
+http_port: 10000
+sys_logs: /var/log/messages
+
+

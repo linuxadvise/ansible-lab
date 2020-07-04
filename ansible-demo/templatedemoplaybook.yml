@@ -1,0 +1,11 @@
+---
+- hosts: all
+  vars:
+    variable1: 'Hello...!!!'
+    variable2: 'My first playbook using template'
+  tasks:
+    - name: Basic Template Example
+      template:
+        src: sample.j2
+        dest: /home/osboxes/ansible-demo/output.txt
+

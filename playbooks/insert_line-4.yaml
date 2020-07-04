@@ -1,0 +1,12 @@
+---
+- name: Insert line
+  become: true
+  hosts: appservers
+  tasks:
+    - name: server.example.com in /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        line: '192.0.2.42 server.example.com server'
+        state: absent
+
+
