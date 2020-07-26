@@ -1,0 +1,41 @@
+- name: check device name which should be parted
+  shell: parted -l
+  register: device_name
+
+- name: Show middle device name 
+  debug:
+    msg: "{{ device_name.stderr.split(':')[1] }}"
+  register: mid_device
+  when: device_name.stderr != ""
+
+- name: Display real device name 
+  debug: 
+    msg: "{{ mid_device.msg.split()[0] }}"
+  register: real_device
+  when: device_name.stderr != ""
+
+
+- name: partition new disk
+  shell: 'echo -e "n\np\n1\n\n\nw" | fdisk {{ real_device.msg }}'
+  args:
+    executable: /bin/bash
+  when: device_name.stderr != ""
+
+- name: Makes file system on block device
+  filesystem:
+    fstype: xfs
+    dev: "{{ real_device.msg }}1"
+  when: device_name.stderr != ""
+
+- name: new dir to mount
+  file: path=/opt/elasticsearch state=directory
+  when: device_name.stderr != ""
+
+- name: mount the dir
+  mount:
+    path: /opt/elasticsearch
+    src: "{{ real_device.msg }}1"
+    fstype: xfs
+    state: mounted
+  when: device_name.stderr != ""
+
