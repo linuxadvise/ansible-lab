@@ -1,0 +1,25 @@
+---
+kibana_version: "7.x"
+kibana_url: "https://artifacts.elastic.co/downloads/kibana/kibana-7.8.0-x86_64.rpm"
+
+kibana_package: kibana
+kibana_package_state: present
+
+kibana_service_state: started
+kibana_service_enabled: true
+
+kibana_cert_path: /etc/kibana/certs
+kibana_config_template: kibana.yml.j2
+kibana_config_file_path: /etc/kibana/kibana.yml
+ssl_enabled: true
+ssl_key: "cert.key"
+ssl_cert: "cert.cert"
+
+kibana_server_port: 5601
+kibana_server_host: "0.0.0.0"
+
+kibana_elasticsearch_url: 
+       - "<hostname>:9200"
+       - "<hostname>:9200"
+kibana_elasticsearch_username: "<username>"
+kibana_elasticsearch_password: "<pass>"

@@ -1,0 +1,33 @@
+---
+#- name: set fact allow_downgrade to no
+#  set_fact: allow_downgrade=no
+
+#- name: set fact allow_downgrade to yes
+#  set_fact: allow_downgrade=yes
+#  when: es_allow_downgrades
+
+- name: Include optional user and group creation.
+  when: (es_user_id is defined) and (es_group_id is defined)
+  import_tasks: "es-optional-user.yaml"
+
+- name: check-set-parameters
+  import_tasks: "es-config.yaml"
+  tags:
+      - always
+
+- name: check-set-parameters
+  import_tasks: "es-ssl.yaml"
+  tags:
+      - always
+
+- name: RedHat - Install Elasticsearch from url
+  become: yes
+  yum: 
+   name={{ es_custom_package_url }} state=present
+  register: elasticsearch_install_from_package
+#  notify: restart elasticsearch
+
+- name: Make sure elasticsearch is enabled
+  become: yes
+  service: name=elasticsearch enabled=yes
+  when: es_start_service

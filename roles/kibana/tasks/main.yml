@@ -1,0 +1,40 @@
+---
+
+- name: RedHat - Install Kibana from url
+  become: yes
+  yum: 
+   name={{ kibana_url }} state=present
+
+
+- name: ensure certificate directory exists
+  become: yes
+  file:
+    dest: "{{ kibana_cert_path }}"
+    state: directory
+    owner: root
+    mode: "750"
+
+- name: Upload SSL/TLS key and certificate
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "{{ kibana_cert_path }}/{{ item }}"
+    mode: "640"
+  with_items:
+    - "{{ ssl_key }}"
+    - "{{ ssl_cert }}"
+
+- name: Ensure Kibana is started and enabled at boot.
+  service:
+    name: kibana
+    state: "{{ kibana_service_state }}"
+    enabled: "{{ kibana_service_enabled }}"
+
+- name: Copy Kibana configuration.
+  template:
+    src: "{{ kibana_config_template }}"
+    dest: "{{ kibana_config_file_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart kibana
